@@ -1,7 +1,13 @@
 class Printer{
 
-    void printDocuments(int numOfCopies, String docName){
+    synchronized void printDocuments(int numOfCopies, String docName){
         for (int i = 1; i <=10 ; i++) {
+            try {
+
+                Thread.sleep(50);// --> this will make each thread wait, but it still is not what we are looking for
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println(">> Printing " +docName+ " " +i);
         }
     }
@@ -16,7 +22,9 @@ class MyThread extends Thread{
 
     @Override
     public void run(){
-        pRef.printDocuments(10, "TalsProfile.pdf");
+        synchronized (pRef) {
+            pRef.printDocuments(10, "TalsProfile.pdf");
+        }
     }
 }
 
@@ -48,6 +56,14 @@ public class SyncApp {
         YourThread yRef = new YourThread(print); // Your Thread has a reference to the Printer Object
 
         mRef.start();
+//        This will work, but it will require us to add a .join method call to every .start method call. Inefficient
+
+//        try {
+//            mRef.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         yRef.start();
 
         System.out.println("=== Application Finished ===");
