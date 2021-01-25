@@ -1,5 +1,5 @@
 
-class MyTask extends Thread{
+class MyTask implements Runnable{
 
     @Override
     public void run(){
@@ -8,6 +8,7 @@ class MyTask extends Thread{
         }
     }
 }
+
 
 public class App {
 
@@ -19,16 +20,16 @@ public class App {
         System.out.println("== Application Started ==");
 
 
-        // In this scenario, job 3 will not execute if job 2 is not a separate Thread. So lets create one
         // Job 1
-        for (int doc = 1; doc <= 10; doc++) {
-            System.out.println("Printing Document #" +doc+ " from printer 1");
-        }
+        //task.executeTask --> Before MyTask was a thread
+        Runnable r = new MyTask();
+        Thread task = new Thread(r);
+        task.start();
 
         // Job 2
-        MyTask task = new MyTask();
-        //task.executeTask --> Before MyTask was a thread
-        task.start();
+        for (int doc = 1; doc <= 100; doc++) {
+            System.out.println("Printing Document #" +doc+ " from printer 1");
+        }
 
         //Job 3
         System.out.println("== Application Finished ==");
