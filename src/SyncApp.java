@@ -1,6 +1,7 @@
 class Printer{
 
     synchronized void printDocuments(int numOfCopies, String docName){
+        System.out.println(Thread.currentThread().getName());
         for (int i = 1; i <=10 ; i++) {
             try {
 
@@ -45,7 +46,7 @@ public class SyncApp {
     public static void main(String[] args) {
 
         System.out.println("=== Application Started ===");
-
+        System.out.println(Thread.currentThread().getName());
         // We have a single Printer Object
         Printer printer1 = new Printer();
 
@@ -60,7 +61,6 @@ public class SyncApp {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        } --> This will work, but it will require us to call join after every start call. Inefficient.
-
         yRef.start();
 
         System.out.println("=== Application Finished ===");
