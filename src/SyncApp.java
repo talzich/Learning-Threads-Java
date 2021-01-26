@@ -12,25 +12,23 @@ class Printer{
         }
     }
 }
+
 class MyThread extends Thread{
 
     Printer pRef;
-
     MyThread(Printer p){
         pRef = p;
     }
 
     @Override
     public void run(){
-        synchronized (pRef) {
             pRef.printDocuments(10, "TalsProfile.pdf");
-        }
     }
 }
 
 class YourThread extends Thread{
-    Printer pRef;
 
+    Printer pRef;
     YourThread(Printer p){
         pRef = p;
     }
@@ -40,15 +38,16 @@ class YourThread extends Thread{
         pRef.printDocuments(10, "JohnsProfile.pdf");
     }
 }
+
 public class SyncApp {
 
     // main is representing main thread
     public static void main(String[] args) {
+
         System.out.println("=== Application Started ===");
 
         // We have a single Printer Object
         Printer printer1 = new Printer();
-        //print.printDocuments(10, "myDocument"); --> If we didn't have a thread to work with
 
         // In this scenario we have multiple threads working on the same Printer Object
         // This will cause de-synchronization
@@ -56,13 +55,11 @@ public class SyncApp {
         YourThread yRef = new YourThread(printer1); // Your Thread has a reference to the Printer Object
 
         mRef.start();
-//        This will work, but it will require us to add a .join method call to every .start method call. Inefficient
-
 //        try {
 //            mRef.join();
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
-//        }
+//        } --> This will work, but it will require us to call join after every start call. Inefficient.
 
         yRef.start();
 
