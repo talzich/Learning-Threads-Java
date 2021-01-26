@@ -47,13 +47,13 @@ public class SyncApp {
         System.out.println("=== Application Started ===");
 
         // We have a single Printer Object
-        Printer print = new Printer();
+        Printer printer1 = new Printer();
         //print.printDocuments(10, "myDocument"); --> If we didn't have a thread to work with
 
         // In this scenario we have multiple threads working on the same Printer Object
         // This will cause de-synchronization
-        MyThread mRef = new MyThread(print);  // MyThread has a reference to the Printer Object
-        YourThread yRef = new YourThread(print); // Your Thread has a reference to the Printer Object
+        MyThread mRef = new MyThread(printer1);  // MyThread has a reference to the Printer Object
+        YourThread yRef = new YourThread(printer1); // Your Thread has a reference to the Printer Object
 
         mRef.start();
 //        This will work, but it will require us to add a .join method call to every .start method call. Inefficient
